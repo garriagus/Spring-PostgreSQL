@@ -35,4 +35,5 @@ build/
 application.properties
 *.properties
 .properties
-src/main/resources/application.properties
+
+bin
