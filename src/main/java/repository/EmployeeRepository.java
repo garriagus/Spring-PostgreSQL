@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import model.Employee;
 
 @Repository
-public interface EmployeeRepository extends JpaRepository<Employee, Long>{
+public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
-
+	void setFirstName(long employeeId, String firstName);
 }
