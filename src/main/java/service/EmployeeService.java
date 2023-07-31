@@ -1,42 +1,18 @@
 package service;
 
 import model.Employee;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import repository.EmployeeRepository;
 
 import java.util.List;
-import java.util.Optional;
 
-@Service
-public class EmployeeService {
+public interface EmployeeService {
 
-    private final EmployeeRepository employeeRepository;
+    Employee createEmployee(Employee employee);
 
-    @Autowired
-    public EmployeeService(EmployeeRepository employeeRepository) {
-        this.employeeRepository = employeeRepository;
-    }
+    List<Employee> getAllEmployees();
 
-    public Employee saveEmployee(Employee employee) {
-        return employeeRepository.save(employee);
-    }
+    Employee getEmployeeById(long id);
 
-    public List<Employee> getAllEmployees() {
-        return employeeRepository.findAll();
-    }
+    Employee updateEmployee(long id, Employee updatedEmployee);
 
-    public Optional<Employee> getEmployeeById(long id) {
-        return employeeRepository.findById(id);
-    }
-
-    public void deleteEmployee(long id) {
-        employeeRepository.deleteById(id);
-    }
-
-    public void updateFirstName(long employeeId, String firstName) {
-        employeeRepository.setFirstName(employeeId, firstName);
-    }
-
-    // Otros métodos de servicio según tus necesidades
+    boolean deleteEmployee(long id);
 }
