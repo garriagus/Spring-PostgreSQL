@@ -1,4 +1,4 @@
-package model;
+package com.employeeportal.springboot.model;
 
 import java.util.List;
 

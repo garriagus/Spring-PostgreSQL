@@ -1,6 +1,8 @@
-package model;
+package com.employeeportal.springboot.model;
 
 import java.util.List;
+
+import com.employeeportal.springboot.model.emp.Employee;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
