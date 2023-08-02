@@ -1,28 +1,17 @@
 package com.employeeportal.springboot.model;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
-@Table(name = "rfid_key_door_mapping")
 public class RFIDKeyDoorMapping {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private long id;
+	private Long id;
 
 	@ManyToOne
 	@JoinColumn(name = "rfid_key_id")
@@ -32,11 +21,38 @@ public class RFIDKeyDoorMapping {
 	@JoinColumn(name = "door_id")
 	private Door door;
 
-	public RFIDKeyDoorMapping(RFIDKey rfidKey, Door door) {
+	public RFIDKeyDoorMapping() {
+	}
+
+	public RFIDKeyDoorMapping(Long id, RFIDKey rfidKey, Door door) {
+		super();
+		this.id = id;
 		this.rfidKey = rfidKey;
 		this.door = door;
 	}
-	
-	
-	
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public RFIDKey getRfidKey() {
+		return rfidKey;
+	}
+
+	public void setRfidKey(RFIDKey rfidKey) {
+		this.rfidKey = rfidKey;
+	}
+
+	public Door getDoor() {
+		return door;
+	}
+
+	public void setDoor(Door door) {
+		this.door = door;
+	}
+
 }

@@ -1,19 +1,37 @@
 package com.employeeportal.springboot.service;
 
 import java.util.List;
+import java.util.Optional;
 
-import com.employeeportal.springboot.model.emp.Employee;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-public interface EmployeeService {
+import com.employeeportal.springboot.model.Employee;
+import com.employeeportal.springboot.repository.EmployeeRepository;
 
-	List<Employee> findAll();
+@Service
+public class EmployeeService {
 
-	Employee findById(int id);
+	private final EmployeeRepository employeeRepository;
 
-	Employee save(Employee sportsIcon);
+	@Autowired
+	public EmployeeService(EmployeeRepository employeeRepository) {
+		this.employeeRepository = employeeRepository;
+	}
 
-	Employee update(int id, Employee employee);
+	public List<Employee> getAllEmployees() {
+		return employeeRepository.findAll();
+	}
 
-	void delete(int id);
+	public Optional<Employee> getEmployeeById(Long id) {
+		return employeeRepository.findById(id);
+	}
 
+	public Employee saveEmployee(Employee employee) {
+		return employeeRepository.save(employee);
+	}
+
+	public void deleteEmployee(Long id) {
+		employeeRepository.deleteById(id);
+	}
 }

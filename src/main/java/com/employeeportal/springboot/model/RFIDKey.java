@@ -1,52 +1,108 @@
 package com.employeeportal.springboot.model;
 
+import java.time.LocalDate;
 import java.util.List;
 
-import com.employeeportal.springboot.model.emp.Employee;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
-@Table(name = "rfid_keys")
 public class RFIDKey {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private int id;
 
-    @Column(name = "key_serial_number")
-    private String keySerialNumber;
+	@Column(name = "serial_number")
+	private String serialNumber;
 
-    @Column(name = "key_type")
-    private String keyType;
+	public enum KeyType {
+		KEY_RING, CARD
+	}
 
-	@ManyToOne
+	@Enumerated(EnumType.STRING)
+	private KeyType keyType;
+
+	@Column(name = "joiningDate")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate joiningDate;
+
+	@OneToOne(mappedBy = "rfidKey")
 	private Employee employee;
 
-    @ManyToMany
-    @JoinTable(
-            name = "rfid_key_door_mapping",
-            joinColumns = @JoinColumn(name = "rfid_key_id"),
-            inverseJoinColumns = @JoinColumn(name = "door_id")
-    )
-    private List<Door> doors;
+	@OneToMany(mappedBy = "rfidKey")
+	private List<RFIDKeyDoorMapping> rfidKeyDoors;
 
+	public RFIDKey() {
+	}
 
-    
+	public RFIDKey(int id, String serialNumber, KeyType keyType, LocalDate joiningDate, Employee employee,
+			List<RFIDKeyDoorMapping> rfidKeyDoors) {
+		super();
+		this.id = id;
+		this.serialNumber = serialNumber;
+		this.keyType = keyType;
+		this.joiningDate = joiningDate;
+		this.employee = employee;
+		this.rfidKeyDoors = rfidKeyDoors;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getSerialNumber() {
+		return serialNumber;
+	}
+
+	public void setSerialNumber(String serialNumber) {
+		this.serialNumber = serialNumber;
+	}
+
+	public KeyType getKeyType() {
+		return keyType;
+	}
+
+	public void setKeyType(KeyType keyType) {
+		this.keyType = keyType;
+	}
+
+	public LocalDate getJoiningDate() {
+		return joiningDate;
+	}
+
+	public void setJoiningDate(LocalDate joiningDate) {
+		this.joiningDate = joiningDate;
+	}
+
+	public Employee getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+	}
+
+	public List<RFIDKeyDoorMapping> getRfidKeyDoors() {
+		return rfidKeyDoors;
+	}
+
+	public void setRfidKeyDoors(List<RFIDKeyDoorMapping> rfidKeyDoors) {
+		this.rfidKeyDoors = rfidKeyDoors;
+	}
+
 }
